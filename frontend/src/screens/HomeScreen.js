@@ -1,12 +1,35 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Row, Col } from "react-bootstrap";
 import Product from "../components/Product";
-import products from "../products";
+import { listProducts } from "../actions/productActions";
+import Loader from "../components/Loader";
+import Message from "../components/Message";
 
 const HomeScreen = () => {
+  const dispatch = useDispatch();
+
+  const productList = useSelector((state) => state.productList);
+  const { loading, error, products } = productList;
+
+  useEffect(() => {
+    dispatch(listProducts());
+  }, [dispatch]);
+
+  if (loading) {
+    return <Loader />;
+  }
+
+  if (error) {
+    return (
+      <Message variant="danger">
+        <h3>Ooops, something went wrong!</h3>
+      </Message>
+    );
+  }
+
   return (
     <>
-      <h1>Latest Products</h1>
       <Row>
         {products.map((product) => {
           return (
