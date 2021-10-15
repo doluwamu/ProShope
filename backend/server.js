@@ -30,8 +30,8 @@ app.use(provideErrorHandler);
 app.get("/", (req, res) => {
   res.send("API is running");
 });
-app.use("/api/v1/users", userRoutes);
 app.use("/api/v1/products", productRoutes);
+app.use("/api/v1/users", userRoutes);
 
 const PORT = process.env.PORT || 5000;
 
