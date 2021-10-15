@@ -31,15 +31,7 @@ export const registerUser = asyncHandler(async (req, res) => {
   const { name, email, password } = req.body;
 
   try {
-    // const userWithNamexists = await User.find({ name });
     const userExists = await User.findOne({ email });
-
-    // if (userWithNamexists) {
-    //   return res.status(400).send({
-    //     title: "Existing data!",
-    //     detail: "User with this username already exists!",
-    //   });
-    // }
 
     if (userExists) {
       return res.sendApiError({
