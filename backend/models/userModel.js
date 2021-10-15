@@ -30,6 +30,10 @@ userSchema.methods.matchPassword = async function (enteredPassword) {
 };
 
 userSchema.pre("save", function (next) {
+  if (!this.isModified("password")) {
+    next();
+  }
+
   const user = this;
 
   bcrypt.genSalt(10, (err, salt) => {
