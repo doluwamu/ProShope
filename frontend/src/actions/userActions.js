@@ -14,14 +14,7 @@ import {
   USER_UPDATE_PROFILE_REQUEST,
   USER_UPDATE_PROFILE_SUCCESS,
 } from "../redux/constants/userConstants";
-
-export const extractServerError = (serverError) => {
-  let errors = [{ title: "Error!", detail: "Ooops, something went wrong!" }];
-  if (serverError && serverError.data && serverError.data.errors) {
-    errors = serverError.data.errors;
-  }
-  return errors;
-};
+import { extractServerError } from "../helpers/extractErrors";
 
 export const login = (email, password) => async (dispatch) => {
   try {
