@@ -8,14 +8,6 @@ import {
   PRODUCT_DETAILS_SUCCESS,
 } from "../redux/constants/productConstants";
 
-// export const extractServerError = (serverError) => {
-//   let errors = [{ title: "Error!", detail: "Ooops, something went wrong!" }];
-//   if (serverError && serverError.data && serverError.data.errors) {
-//     errors = serverError.data.errors;
-//   }
-//   return errors;
-// };
-
 export const listProducts = () => async (dispatch) => {
   try {
     dispatch({
@@ -27,6 +19,7 @@ export const listProducts = () => async (dispatch) => {
       payload: data,
     });
   } catch (error) {
+    // console.log(error);
     dispatch({
       type: PRODUCT_LIST_FAIL,
       payload: error.message,
@@ -41,8 +34,7 @@ export const ProductDetails = (id) => async (dispatch) => {
     });
     const { data } = await axios.get(`/api/v1/products/${id}`);
     dispatch({
-      type: 
-      PRODUCT_DETAILS_SUCCESS,
+      type: PRODUCT_DETAILS_SUCCESS,
       payload: data,
     });
   } catch ({ message }) {

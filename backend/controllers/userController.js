@@ -27,7 +27,7 @@ export const authUser = async (req, res) => {
   }
 };
 
-export const registerUser = asyncHandler(async (req, res) => {
+export const registerUser = async (req, res) => {
   const { name, email, password } = req.body;
 
   try {
@@ -63,7 +63,7 @@ export const registerUser = asyncHandler(async (req, res) => {
   } catch (error) {
     return res.mongoError(error);
   }
-});
+};
 
 export const getUserProfile = async (req, res) => {
   try {
@@ -83,4 +83,34 @@ export const getUserProfile = async (req, res) => {
       });
     }
   } catch (error) {}
+};
+
+export const updateUserProfile = async (req, res) => {
+  try {
+    const user = await User.findById(req.user._id);
+
+    if (user) {
+      user.name = req.body.name || user.name;
+      user.email = req.body.email || user.email;
+      if (req.body.password) {
+        user.password = req.body.password;
+      }
+
+      const updatedUser = await user.save();
+      return res.json({
+        _id: updatedUser._id,
+        name: updatedUser.name,
+        email: updatedUser.email,
+        isAdmin: updatedUser.isAdmin,
+        token: generateToken(updatedUser._id),
+      });
+    } else {
+      res.sendApiError({
+        title: "Invalid data",
+        detail: "User not found!",
+      });
+    }
+  } catch (error) {
+    return res.mongoError(error);
+  }
 };
