@@ -82,7 +82,9 @@ export const getUserProfile = async (req, res) => {
         detail: "User not found!",
       });
     }
-  } catch (error) {}
+  } catch (error) {
+    return res.mongoError(error);
+  }
 };
 
 export const updateUserProfile = async (req, res) => {
@@ -110,6 +112,31 @@ export const updateUserProfile = async (req, res) => {
         detail: "User not found!",
       });
     }
+  } catch (error) {
+    return res.mongoError(error);
+  }
+};
+
+export const getUsers = async (req, res) => {
+  try {
+    const users = await User.find({});
+    return res.json(users);
+  } catch (error) {
+    return res.mongoError(error);
+  }
+};
+
+export const deleteUser = async (req, res) => {
+  try {
+    const user = await User.findById(req.params.id);
+    if (!user) {
+      return res.sendApiError({
+        title: "Invalid data",
+        detail: "User doesn't exist",
+      });
+    }
+    await user.remove();
+    return res.json({ message: "User removed" });
   } catch (error) {
     return res.mongoError(error);
   }

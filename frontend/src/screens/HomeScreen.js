@@ -4,7 +4,7 @@ import { Row, Col } from "react-bootstrap";
 import Product from "../components/Product";
 import { listProducts } from "../actions/productActions";
 import Loader from "../components/Loader";
-import Message from "../components/Message";
+import ServerError from "../errors/ServerError";
 
 const HomeScreen = () => {
   const dispatch = useDispatch();
@@ -21,11 +21,7 @@ const HomeScreen = () => {
   }
 
   if (error) {
-    return (
-      <Message variant="danger">
-        <h3>Ooops, something went wrong!</h3>
-      </Message>
-    );
+    return <ServerError error={error} />;
   }
 
   return (

@@ -7,6 +7,7 @@ import {
   PRODUCT_DETAILS_REQUEST,
   PRODUCT_DETAILS_SUCCESS,
 } from "../redux/constants/productConstants";
+import { extractServerError } from "../helpers/extractErrors";
 
 export const listProducts = () => async (dispatch) => {
   try {
@@ -22,7 +23,7 @@ export const listProducts = () => async (dispatch) => {
     // console.log(error);
     dispatch({
       type: PRODUCT_LIST_FAIL,
-      payload: error.message,
+      payload: extractServerError(error.response) || [],
     });
   }
 };

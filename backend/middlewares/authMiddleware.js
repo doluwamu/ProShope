@@ -26,3 +26,14 @@ export const protect = async (req, res, next) => {
     });
   }
 };
+
+export const isAdmin = (req, res, next) => {
+  if (req.user && req.user.isAdmin) {
+    next();
+  } else {
+    return res.sendApiError({
+      title: "Not authorized",
+      detail: "Not authorized as an admin!",
+    });
+  }
+};
