@@ -126,6 +126,51 @@ export const getUsers = async (req, res) => {
   }
 };
 
+export const getUserById = async (req, res) => {
+  try {
+    const user = await User.findById(req.params.id).select("-password");
+
+    if (!user) {
+      return res.sendApiError({
+        title: "Invalid data",
+        detail: "User doesn't exist",
+      });
+    }
+
+    return res.json(user);
+  } catch (error) {
+    return res.mongoError(error);
+  }
+};
+
+export const updateUser = async (req, res) => {
+  try {
+    const user = await User.findById(req.params.id);
+    let isUserAdmin = false;
+
+    if (user) {
+      user.name = req.body.name || user.name;
+      user.email = req.body.email || user.email;
+      user.isAdmin = req.body.isAdmin;
+
+      const updatedUser = await user.save();
+      return res.json({
+        _id: updatedUser._id,
+        name: updatedUser.name,
+        email: updatedUser.email,
+        isAdmin: updatedUser.isAdmin,
+      });
+    } else {
+      res.sendApiError({
+        title: "Invalid data",
+        detail: "User not found!",
+      });
+    }
+  } catch (error) {
+    return res.mongoError(error);
+  }
+};
+
 export const deleteUser = async (req, res) => {
   try {
     const user = await User.findById(req.params.id);
