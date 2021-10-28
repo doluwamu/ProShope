@@ -16,7 +16,11 @@ const UserListScreen = ({ history }) => {
   const { userInfo } = userLogin;
 
   const userDelete = useSelector((state) => state.userDelete);
-  const { success: successDelete } = userDelete;
+  const {
+    loading: loadingDelete,
+    error: errorDelete,
+    success: successDelete,
+  } = userDelete;
 
   useEffect(() => {
     if (userInfo && userInfo.isAdmin) {
@@ -34,8 +38,12 @@ const UserListScreen = ({ history }) => {
   return (
     <>
       <h1>Users</h1>
+      {errorDelete && errorDelete.length > 0 && (
+        <ServerError error={errorDelete} />
+      )}
+      {loadingDelete && <Loader width={"30px"} height={"30px"} />}
       {loading ? (
-        <Loader />
+        <Loader width={"50px"} height={"50px"} />
       ) : error ? (
         <ServerError error={error} />
       ) : (

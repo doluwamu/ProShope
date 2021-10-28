@@ -17,8 +17,6 @@ const ProfileScreen = ({ location, history }) => {
   const [message, setMessage] = useState(null);
   const [isSuccess, setIsSuccess] = useState(false);
 
-  console.log(name, email);
-
   const dispatch = useDispatch();
 
   const userLogin = useSelector((state) => state.userLogin);

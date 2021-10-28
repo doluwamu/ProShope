@@ -1,5 +1,4 @@
-import products from "./data/products.js";
-import users from "./data/users.js";
+import { users, products } from "./data/index.js";
 import Order from "../models/orderModel.js";
 import Product from "../models/productModel.js";
 import User from "../models/userModel.js";

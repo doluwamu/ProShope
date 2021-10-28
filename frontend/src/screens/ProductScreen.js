@@ -11,7 +11,7 @@ import {
   Form,
 } from "react-bootstrap";
 import Rating from "../components/Rating";
-import { ProductDetails } from "../actions/productActions";
+import { listProductDetails } from "../actions/productActions";
 import Loader from "../components/Loader";
 import Message from "../components/Message";
 
@@ -24,7 +24,7 @@ const ProductScreen = ({ history, match: { params } }) => {
   const { loading, error, product } = productById;
 
   useEffect(() => {
-    dispatch(ProductDetails(params.id));
+    dispatch(listProductDetails(params.id));
   }, [dispatch, params.id]);
 
   if (loading) {
