@@ -6,6 +6,7 @@ import {
   PRODUCT_DETAILS_FAIL,
   PRODUCT_DETAILS_REQUEST,
   PRODUCT_DETAILS_SUCCESS,
+  PRODUCT_DETAILS_RESET,
   PRODUCT_DELETE_SUCCESS,
   PRODUCT_DELETE_REQUEST,
   PRODUCT_DELETE_FAIL,
@@ -21,6 +22,7 @@ import { extractServerError } from "../helpers/extractErrors";
 
 export const listProducts = () => async (dispatch) => {
   try {
+    dispatch({ type: PRODUCT_DETAILS_RESET });
     dispatch({
       type: PRODUCT_LIST_REQUEST,
     });
@@ -30,7 +32,6 @@ export const listProducts = () => async (dispatch) => {
       payload: data,
     });
   } catch (error) {
-    // console.log(error);
     dispatch({
       type: PRODUCT_LIST_FAIL,
       payload: extractServerError(error.response) || [],
@@ -40,6 +41,7 @@ export const listProducts = () => async (dispatch) => {
 
 export const listProductDetails = (id) => async (dispatch) => {
   try {
+    // dispatch({ type: PRODUCT_DETAILS_RESET });
     dispatch({
       type: PRODUCT_DETAILS_REQUEST,
     });
