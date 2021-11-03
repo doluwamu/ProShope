@@ -23,13 +23,15 @@ import {
 } from "../redux/constants/productConstants";
 import { extractServerError } from "../helpers/extractErrors";
 
-export const listProducts = () => async (dispatch) => {
+export const listProducts = (keyword, pageNumber) => async (dispatch) => {
   try {
     dispatch({ type: PRODUCT_DETAILS_RESET });
     dispatch({
       type: PRODUCT_LIST_REQUEST,
     });
-    const { data } = await axios.get("/api/v1/products");
+    const { data } = await axios.get(
+      `/api/v1/products?keyword=${keyword}&pageNumber=${pageNumber}`
+    );
     dispatch({
       type: PRODUCT_LIST_SUCCESS,
       payload: data,
