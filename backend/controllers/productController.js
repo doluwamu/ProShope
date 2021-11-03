@@ -103,3 +103,43 @@ export const updateProduct = async (req, res) => {
     return res.mongoError(error);
   }
 };
+
+export const createProductReview = async (req, res) => {
+  const { rating, comment } = req.body;
+  try {
+    const product = await Product.findById(req.params.id);
+
+    if (!product) {
+      return res.sendApiError({
+        title: "Invalid data",
+        detail: "Product not found",
+      });
+    } else {
+      const alreadyReviewed = product.reviews.find(
+        (r) => r.user.toString() === req.user._id.toString()
+      );
+      if (alreadyReviewed) {
+        return res.sendApiError({
+          title: "Already reviewed",
+          detail: "Product already reviewed",
+        });
+      }
+      const review = {
+        name: req.user.name,
+        rating: Number(rating),
+        comment,
+        user: req.user._id,
+      };
+
+      product.reviews.push(review);
+      product.numReviews = product.reviews.length;
+      product.rating =
+        product.reviews.reduce((acc, item) => item.rating + acc, 0) /
+        product.reviews.length;
+      await product.save();
+      return res.status(201).json({ message: "Review added" });
+    }
+  } catch (error) {
+    return res.mongoError(error);
+  }
+};

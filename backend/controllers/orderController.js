@@ -1,14 +1,5 @@
 import Order from "../models/orderModel.js";
 
-export const getOrders = async (req, res) => {
-  try {
-    const order = await Order.find({});
-    return res.json(order);
-  } catch (error) {
-    return res.mongoError(error);
-  }
-};
-
 export const getOrderById = async (req, res) => {
   try {
     const order = await Order.findById(req.params.id).populate(
@@ -55,9 +46,38 @@ export const updateOrderToPaid = async (req, res) => {
   }
 };
 
+export const updateOrderToDelivered = async (req, res) => {
+  try {
+    const order = await Order.findById(req.params.id);
+
+    if (order) {
+      order.isDelivered = true;
+      order.deliveredAt = Date.now();
+      const updatedOrder = await order.save();
+      res.json(updatedOrder);
+    } else {
+      res.sendApiError({
+        title: "Invalid data",
+        detail: `Order not found`,
+      });
+    }
+  } catch (error) {
+    return res.mongoError(error);
+  }
+};
+
 export const getMyOrders = async (req, res) => {
   try {
     const orders = await Order.find({ user: req.user._id });
+    res.json(orders);
+  } catch (error) {
+    return res.mongoError(error);
+  }
+};
+
+export const getOrders = async (req, res) => {
+  try {
+    const orders = await Order.find({}).populate("user", "id name");
     res.json(orders);
   } catch (error) {
     return res.mongoError(error);
