@@ -19,6 +19,7 @@ import Loader from "../components/Loader";
 import Message from "../components/Message";
 import ServerError from "../errors/ServerError";
 import { PRODUCT_CREATE_REVIEW_RESET } from "../redux/constants/productConstants";
+import Meta from "../components/Meta";
 
 const ProductScreen = ({ history, match: { params } }) => {
   const [qty, setQty] = useState(1);
@@ -69,6 +70,7 @@ const ProductScreen = ({ history, match: { params } }) => {
 
   return (
     <>
+      <Meta title={product.name} />
       <Link className="btn btn-light my-3" to="/">
         Go Back
       </Link>

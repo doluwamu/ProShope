@@ -158,3 +158,12 @@ export const createProductReview = async (req, res) => {
     return res.mongoError(error);
   }
 };
+
+export const getTopProducts = async (req, res) => {
+  try {
+    const products = await Product.find({}).sort({ rating: -1 }).limit(3);
+    return res.json(products);
+  } catch (error) {
+    return res.mongoError(error);
+  }
+};
