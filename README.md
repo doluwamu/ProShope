@@ -25,4 +25,4 @@ JWT_SECRET = json-web-token secret(Could be anything unique such as: ftihuidhre)
 PAYPAL_CLIENT_ID = Your PayPal client ID
 ```
 
-## For more scripts you can run, go into the frontend folder and find the `README.md` file
+## For more scripts you can run, go into the frontend folder and find the `README.md` file.
