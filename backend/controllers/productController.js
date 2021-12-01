@@ -1,6 +1,9 @@
 import Product from "../models/productModel.js";
 import User from "../models/userModel.js";
 
+// Request type: GET
+// To: /api/v1/products/
+// Desc: to get all products
 export const getProducts = async (req, res) => {
   try {
     const pageSize = 12;
@@ -25,6 +28,9 @@ export const getProducts = async (req, res) => {
   }
 };
 
+// Request type: GET
+// To: /api/v1/products/:id
+// Desc: to get a product with a specified id
 export const getProductById = async (req, res) => {
   try {
     const { id } = req.params;
@@ -35,6 +41,9 @@ export const getProductById = async (req, res) => {
   }
 };
 
+// Request type: DELETE
+// To: /api/v1/products/:id
+// Desc: to delete a product with a specified id (Admins only)
 export const deleteProduct = async (req, res) => {
   try {
     const { id } = req.params;
@@ -62,6 +71,9 @@ export const deleteProduct = async (req, res) => {
   }
 };
 
+// Request type: POST
+// To: /api/v1/products/
+// Desc: to create a product (Admins only)
 export const createProduct = async (req, res) => {
   try {
     const product = new Product({
@@ -83,6 +95,9 @@ export const createProduct = async (req, res) => {
   }
 };
 
+// Request type: PUT
+// To: /api/v1/products/:id
+// Desc: to update a product with a specified id (Admins only)
 export const updateProduct = async (req, res) => {
   const { name, price, description, brand, image, category, countInStock } =
     req.body;
@@ -119,6 +134,9 @@ export const updateProduct = async (req, res) => {
   }
 };
 
+// Request type: POST
+// To: /api/v1/products/:id/reviews
+// Desc: to add a product review
 export const createProductReview = async (req, res) => {
   const { rating, comment } = req.body;
   try {
@@ -159,6 +177,9 @@ export const createProductReview = async (req, res) => {
   }
 };
 
+// Request type: GET
+// To: /api/v1/products/top
+// Desc: to get top rated products
 export const getTopProducts = async (req, res) => {
   try {
     const products = await Product.find({}).sort({ rating: -1 }).limit(3);

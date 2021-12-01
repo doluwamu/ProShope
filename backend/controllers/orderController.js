@@ -1,5 +1,8 @@
 import Order from "../models/orderModel.js";
 
+// Request type: GET
+// To: /api/v1/orders/:id
+// Desc: to get an order by its id
 export const getOrderById = async (req, res) => {
   try {
     const order = await Order.findById(req.params.id).populate(
@@ -20,6 +23,9 @@ export const getOrderById = async (req, res) => {
   }
 };
 
+// Request type: PUT
+// To: /api/v1/orders/:id/pay
+// Desc: to update a particular order's paid status
 export const updateOrderToPaid = async (req, res) => {
   try {
     const order = await Order.findById(req.params.id);
@@ -46,6 +52,9 @@ export const updateOrderToPaid = async (req, res) => {
   }
 };
 
+// Request type: PUT
+// To: /api/v1/orders/:id/deliver
+// Desc: to update a particular order's delivered status (Admins only)
 export const updateOrderToDelivered = async (req, res) => {
   try {
     const order = await Order.findById(req.params.id);
@@ -66,6 +75,9 @@ export const updateOrderToDelivered = async (req, res) => {
   }
 };
 
+// Request type: GET
+// To: /api/v1/orders/myorders
+// Desc: to get a user's orders
 export const getMyOrders = async (req, res) => {
   try {
     const orders = await Order.find({ user: req.user._id });
@@ -75,6 +87,9 @@ export const getMyOrders = async (req, res) => {
   }
 };
 
+// Request type: GET
+// To: /api/v1/orders/
+// Desc: to get all orders from DB (Admins only)
 export const getOrders = async (req, res) => {
   try {
     const orders = await Order.find({}).populate("user", "id name");
@@ -84,6 +99,9 @@ export const getOrders = async (req, res) => {
   }
 };
 
+// Request type: POST
+// To: /api/v1/orders/
+// Desc: to add an order
 export const addOrderItems = async (req, res) => {
   try {
     const {

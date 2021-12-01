@@ -21,6 +21,7 @@ export const protect = async (req, res, next) => {
 
   if (!token) {
     res.sendApiError({
+      status: 401,
       title: "Not authorized",
       detail: "Not authorized, no token",
     });
@@ -32,6 +33,7 @@ export const isAdmin = (req, res, next) => {
     next();
   } else {
     return res.sendApiError({
+      status: 401,
       title: "Not authorized",
       detail: "Not authorized as an admin!",
     });

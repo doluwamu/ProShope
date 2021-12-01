@@ -2,6 +2,9 @@ import User from "../models/userModel.js";
 import { generateToken } from "../utils/generateToken.js";
 import asyncHandler from "express-async-handler";
 
+// Request type: POST
+// To: /api/v1/users/login
+// Desc: to login a user
 export const authUser = async (req, res) => {
   try {
     const { email, password } = req.body;
@@ -27,6 +30,9 @@ export const authUser = async (req, res) => {
   }
 };
 
+// Request type: POST
+// To: /api/v1/users/
+// Desc: to register a user
 export const registerUser = async (req, res) => {
   const { name, email, password } = req.body;
 
@@ -65,6 +71,9 @@ export const registerUser = async (req, res) => {
   }
 };
 
+// Request type: GET
+// To: /api/v1/users/profile
+// Desc: to get user's info from DB
 export const getUserProfile = async (req, res) => {
   try {
     const user = await User.findById(req.user._id);
@@ -87,6 +96,9 @@ export const getUserProfile = async (req, res) => {
   }
 };
 
+// Request type: PUT
+// To: /api/v1/users/profile
+// Desc: to update a user's profile
 export const updateUserProfile = async (req, res) => {
   try {
     const user = await User.findById(req.user._id);
@@ -117,6 +129,9 @@ export const updateUserProfile = async (req, res) => {
   }
 };
 
+// Request type: GET
+// To: /api/v1/users
+// Desc: To get all users from DB (Admins only)
 export const getUsers = async (req, res) => {
   try {
     const users = await User.find({});
@@ -126,6 +141,9 @@ export const getUsers = async (req, res) => {
   }
 };
 
+// Request type: GET
+// To: /api/v1/users/:id
+// Desc: To get a user's info from DB by a specified id (Admins only)
 export const getUserById = async (req, res) => {
   try {
     const user = await User.findById(req.params.id).select("-password");
@@ -143,6 +161,9 @@ export const getUserById = async (req, res) => {
   }
 };
 
+// Request type: PUT
+// To: /api/v1/users/:id
+// Desc: To update a user's info (Admins only)
 export const updateUser = async (req, res) => {
   try {
     const user = await User.findById(req.params.id);
@@ -171,6 +192,9 @@ export const updateUser = async (req, res) => {
   }
 };
 
+// Request type: DELETE
+// To: /api/v1/users/:id
+// Desc: To delete a user with specified id from DB (Admins only)
 export const deleteUser = async (req, res) => {
   try {
     const user = await User.findById(req.params.id);
